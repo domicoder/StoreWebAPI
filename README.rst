@@ -13,6 +13,7 @@ StoreWebAPI es un api que me permite manejar a traves de consumo de servicio web
 *******************
 Requerimientos
 *******************
+
 -  Web API con ORM
 -  La Web API debe manejar al menos 4 entidades/tablas padre.
 -  Fluent API en DbContext. Optional.
@@ -28,7 +29,7 @@ Tecnologías/Lenguajes utilizados.
 -  ASP .NET CORE 2.1.
 -  C#.
 -  SWAGGER.
--  PRUEBAS UNITARIAS.
+-  Unit Testing.
 
 
 ***************
