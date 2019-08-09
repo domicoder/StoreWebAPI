@@ -8,60 +8,60 @@ using Microsoft.EntityFrameworkCore;
 using MODEL;
 using PERSISTENCE;
 
-namespace WEB_API.Controllers
+namespace StoreWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomerController : ControllerBase
+    public class ProductsController : ControllerBase
     {
         private readonly StoreContext _context;
 
-        public CustomerController(StoreContext context)
+        public ProductsController(StoreContext context)
         {
             _context = context;
         }
 
-        // GET: api/Customers
+        // GET: api/Products
         [HttpGet]
-        public IEnumerable<Customer> GetCustomer()
+        public IEnumerable<Product> GetProducts()
         {
-            return _context.Customers;
+            return _context.Products;
         }
 
-        // GET: api/Customers/5
+        // GET: api/Products/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetCustomer([FromRoute] int id)
+        public async Task<IActionResult> GetProduct([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var customer = await _context.Customers.FindAsync(id);
+            var product = await _context.Products.FindAsync(id);
 
-            if (customer == null)
+            if (product == null)
             {
                 return NotFound();
             }
 
-            return Ok(customer);
+            return Ok(product);
         }
 
-        // PUT: api/Customers/5
+        // PUT: api/Products/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCustomer([FromRoute] int id, [FromBody] Customer customer)
+        public async Task<IActionResult> PutProduct([FromRoute] int id, [FromBody] Product product)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != customer.CustomerId)
+            if (id != product.ProductId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(customer).State = EntityState.Modified;
+            _context.Entry(product).State = EntityState.Modified;
 
             try
             {
@@ -69,7 +69,7 @@ namespace WEB_API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CustomerExists(id))
+                if (!ProductExists(id))
                 {
                     return NotFound();
                 }
@@ -79,48 +79,48 @@ namespace WEB_API.Controllers
                 }
             }
 
-            return Ok(customer);
+            return Ok(product);
         }
 
-        // POST: api/Customers
+        // POST: api/Products
         [HttpPost]
-        public async Task<IActionResult> PostCustomer([FromBody] Customer customer)
+        public async Task<IActionResult> PostProduct([FromBody] Product product)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Customers.Add(customer);
+            _context.Products.Add(product);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCustomers", new { id = customer.CustomerId }, customer);
+            return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);
         }
 
-        // DELETE: api/Customers/5
+        // DELETE: api/Products/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCustomer([FromRoute] int id)
+        public async Task<IActionResult> DeleteProduct([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var customer = await _context.Customers.FindAsync(id);
-            if (customer == null)
+            var product = await _context.Products.FindAsync(id);
+            if (product == null)
             {
-                return NotFound();
+                return Ok(product);
             }
 
-            _context.Customers.Remove(customer);
+            _context.Products.Remove(product);
             await _context.SaveChangesAsync();
 
-            return Ok(customer);
+            return Ok(product);
         }
 
-        private bool CustomerExists(int id)
+        private bool ProductExists(int id)
         {
-            return _context.Customers.Any(e => e.CustomerId == id);
+            return _context.Products.Any(e => e.ProductId == id);
         }
     }
 }

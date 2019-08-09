@@ -12,6 +12,11 @@ namespace PERSISTENCE
             : base(options)
         { }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<InvoiceProductDetail>().HasKey(x => new { x.InvoiceId, x.ProductId });
+        }
+
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<Product> Products { get; set; }

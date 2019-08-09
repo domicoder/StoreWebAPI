@@ -31,6 +31,10 @@ namespace StoreWebAPI
         {
 
             services.AddTransient<ICustomerService, CustomerService>();
+            services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<IInvoiceService, InvoiceService>();
+            services.AddTransient<IInvoiceProductDetailService, InvoiceProductDetailService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 

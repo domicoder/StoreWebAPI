@@ -8,60 +8,60 @@ using Microsoft.EntityFrameworkCore;
 using MODEL;
 using PERSISTENCE;
 
-namespace WEB_API.Controllers
+namespace StoreWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomerController : ControllerBase
+    public class InvoiceController : ControllerBase
     {
         private readonly StoreContext _context;
 
-        public CustomerController(StoreContext context)
+        public InvoiceController(StoreContext context)
         {
             _context = context;
         }
 
-        // GET: api/Customers
+        // GET: api/Invoice
         [HttpGet]
-        public IEnumerable<Customer> GetCustomer()
+        public IEnumerable<Invoice> GetInvoices()
         {
-            return _context.Customers;
+            return _context.Invoices;
         }
 
-        // GET: api/Customers/5
+        // GET: api/Invoice/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetCustomer([FromRoute] int id)
+        public async Task<IActionResult> GetInvoice([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var customer = await _context.Customers.FindAsync(id);
+            var invoice = await _context.Invoices.FindAsync(id);
 
-            if (customer == null)
+            if (invoice == null)
             {
                 return NotFound();
             }
 
-            return Ok(customer);
+            return Ok(invoice);
         }
 
-        // PUT: api/Customers/5
+        // PUT: api/Invoice/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCustomer([FromRoute] int id, [FromBody] Customer customer)
+        public async Task<IActionResult> PutInvoice([FromRoute] int id, [FromBody] Invoice invoice)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != customer.CustomerId)
+            if (id != invoice.InvoiceId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(customer).State = EntityState.Modified;
+            _context.Entry(invoice).State = EntityState.Modified;
 
             try
             {
@@ -69,7 +69,7 @@ namespace WEB_API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CustomerExists(id))
+                if (!InvoiceExists(id))
                 {
                     return NotFound();
                 }
@@ -79,48 +79,48 @@ namespace WEB_API.Controllers
                 }
             }
 
-            return Ok(customer);
+            return Ok(invoice);
         }
 
-        // POST: api/Customers
+        // POST: api/Invoice
         [HttpPost]
-        public async Task<IActionResult> PostCustomer([FromBody] Customer customer)
+        public async Task<IActionResult> PostInvoice([FromBody] Invoice invoice)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Customers.Add(customer);
+            _context.Invoices.Add(invoice);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCustomers", new { id = customer.CustomerId }, customer);
+            return CreatedAtAction("GetInvoice", new { id = invoice.InvoiceId }, invoice);
         }
 
-        // DELETE: api/Customers/5
+        // DELETE: api/Invoice/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCustomer([FromRoute] int id)
+        public async Task<IActionResult> DeleteInvoice([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var customer = await _context.Customers.FindAsync(id);
-            if (customer == null)
+            var invoice = await _context.Invoices.FindAsync(id);
+            if (invoice == null)
             {
                 return NotFound();
             }
 
-            _context.Customers.Remove(customer);
+            _context.Invoices.Remove(invoice);
             await _context.SaveChangesAsync();
 
-            return Ok(customer);
+            return Ok(invoice);
         }
 
-        private bool CustomerExists(int id)
+        private bool InvoiceExists(int id)
         {
-            return _context.Customers.Any(e => e.CustomerId == id);
+            return _context.Invoices.Any(e => e.InvoiceId == id);
         }
     }
 }
