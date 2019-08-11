@@ -77,9 +77,8 @@ namespace SERVICES
                 var originalModel = _storeContext.InvoiceProductDetails.Single(x =>
                 x.InvoiceProductDetailId == model.InvoiceProductDetailId);
 
-                originalModel.InvoiceId = model.InvoiceId;
-                originalModel.Price = model.Price;
-                originalModel.Price = model.Quantity;
+                originalModel.InvoiceId = model.ProductId;
+                originalModel.ProductId = model.ProductId;
 
                 _storeContext.Update(originalModel);
                 _storeContext.SaveChanges();

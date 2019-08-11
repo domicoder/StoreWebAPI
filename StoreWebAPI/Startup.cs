@@ -36,7 +36,7 @@ namespace StoreWebAPI
             services.AddTransient<IInvoiceService, InvoiceService>();
             services.AddTransient<IInvoiceProductDetailService, InvoiceProductDetailService>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddJsonOptions(ConfigureJson);
 
             var connection = Configuration.GetConnectionString("connection");
             services.AddDbContext<StoreContext>
@@ -57,6 +57,11 @@ namespace StoreWebAPI
                     }
                 });
             });
+        }
+
+        private void ConfigureJson(MvcJsonOptions obj)
+        {
+            obj.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -12,8 +12,6 @@ namespace MODEL
         [ForeignKey("Invoice")]
         public int InvoiceId { get; set; }
         [ForeignKey("Product")]
-        public int Price { get; set; }
-        public int Quantity { get; set; }
         public int ProductId { get; set; }
         public Invoice Invoice { get; set; }
         public Product Product { get; set; }
