@@ -32,6 +32,12 @@ Tecnologías/Lenguajes utilizados.
 -  Unit Testing.
 
 
+*******************
+Azure
+*******************
+-  `Web Deploy <https://storewebapi-20190809081851.azurewebsites.net/swagger>`_
+
+
 ***************
 Colaborador
 ***************
