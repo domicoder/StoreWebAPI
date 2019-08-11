@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PERSISTENCE;
 
 namespace PERSISTENCE.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    partial class StoreContextModelSnapshot : ModelSnapshot
+    [Migration("20190811060026_InvoiceProductDetailDeleteSomeFields")]
+    partial class InvoiceProductDetailDeleteSomeFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,8 +31,7 @@ namespace PERSISTENCE.Migrations
                         .IsRequired();
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(80);
+                        .IsRequired();
 
                     b.HasKey("CategoryId");
 
@@ -44,20 +45,17 @@ namespace PERSISTENCE.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Address")
-                        .IsRequired()
-                        .HasMaxLength(100);
+                        .IsRequired();
 
                     b.Property<DateTime>("BornDate");
 
                     b.Property<string>("Email");
 
                     b.Property<string>("Lastname")
-                        .IsRequired()
-                        .HasMaxLength(80);
+                        .IsRequired();
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(80);
+                        .IsRequired();
 
                     b.Property<long>("PhoneNumber")
                         .HasMaxLength(10);
@@ -84,11 +82,17 @@ namespace PERSISTENCE.Migrations
 
             modelBuilder.Entity("MODEL.InvoiceProductDetail", b =>
                 {
+                    b.Property<int>("InvoiceProductDetailId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<int>("InvoiceId");
 
                     b.Property<int>("ProductId");
 
-                    b.HasKey("InvoiceId", "ProductId");
+                    b.HasKey("InvoiceProductDetailId");
+
+                    b.HasIndex("InvoiceId");
 
                     b.HasIndex("ProductId");
 
@@ -104,8 +108,7 @@ namespace PERSISTENCE.Migrations
                     b.Property<int>("CategoryId");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100);
+                        .IsRequired();
 
                     b.Property<long>("Price");
 
@@ -121,12 +124,12 @@ namespace PERSISTENCE.Migrations
             modelBuilder.Entity("MODEL.InvoiceProductDetail", b =>
                 {
                     b.HasOne("MODEL.Invoice", "Invoice")
-                        .WithMany("Products")
+                        .WithMany()
                         .HasForeignKey("InvoiceId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("MODEL.Product", "Product")
-                        .WithMany("Invoices")
+                        .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

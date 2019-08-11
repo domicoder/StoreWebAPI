@@ -79,6 +79,7 @@ namespace SERVICES
 
                 originalModel.Name = model.Name;
                 originalModel.Price = model.Price;
+                originalModel.Stock= model.Stock;
 
                 _storeContext.Update(originalModel);
                 _storeContext.SaveChanges();

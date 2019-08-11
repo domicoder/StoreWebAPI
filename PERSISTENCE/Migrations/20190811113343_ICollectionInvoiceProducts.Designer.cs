@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PERSISTENCE;
 
 namespace PERSISTENCE.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    partial class StoreContextModelSnapshot : ModelSnapshot
+    [Migration("20190811113343_ICollectionInvoiceProducts")]
+    partial class ICollectionInvoiceProducts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,11 +105,15 @@ namespace PERSISTENCE.Migrations
 
                     b.Property<int>("CategoryId");
 
+                    b.Property<int?>("InvoiceId");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100);
 
                     b.Property<long>("Price");
+
+                    b.Property<int?>("ProductId1");
 
                     b.Property<int>("Stock");
 
@@ -115,18 +121,22 @@ namespace PERSISTENCE.Migrations
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("InvoiceId");
+
+                    b.HasIndex("ProductId1");
+
                     b.ToTable("Products");
                 });
 
             modelBuilder.Entity("MODEL.InvoiceProductDetail", b =>
                 {
                     b.HasOne("MODEL.Invoice", "Invoice")
-                        .WithMany("Products")
+                        .WithMany()
                         .HasForeignKey("InvoiceId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("MODEL.Product", "Product")
-                        .WithMany("Invoices")
+                        .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -137,6 +147,14 @@ namespace PERSISTENCE.Migrations
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MODEL.Invoice")
+                        .WithMany("Products")
+                        .HasForeignKey("InvoiceId");
+
+                    b.HasOne("MODEL.Product")
+                        .WithMany("Invoices")
+                        .HasForeignKey("ProductId1");
                 });
 #pragma warning restore 612, 618
         }

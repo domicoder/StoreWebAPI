@@ -46,7 +46,6 @@ namespace SERVICES
             var invoice = new InvoiceProductDetail();
             try
             {
-                invoice = _storeContext.InvoiceProductDetails.Single(x => x.InvoiceProductDetailId == id);
             }
             catch (System.Exception)
             {
@@ -74,15 +73,7 @@ namespace SERVICES
         {
             try
             {
-                var originalModel = _storeContext.InvoiceProductDetails.Single(x =>
-                x.InvoiceProductDetailId == model.InvoiceProductDetailId);
-
-                originalModel.InvoiceId = model.InvoiceId;
-                originalModel.Price = model.Price;
-                originalModel.Price = model.Quantity;
-
-                _storeContext.Update(originalModel);
-                _storeContext.SaveChanges();
+            
             }
             catch (System.Exception)
             {

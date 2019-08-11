@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PERSISTENCE", "PERSISTENCE\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SERVICES", "SERVICES\SERVICES.csproj", "{E19431B1-8D2F-475B-B7D8-8C4129965762}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestStoreWebAPI", "UnitTestStoreWebAPI\UnitTestStoreWebAPI.csproj", "{AAECAC3B-9617-4462-8B99-15828132EA19}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTest.Test", "XUnitTest.Test\XUnitTest.Test.csproj", "{F80345BD-5531-4425-851E-6E8805B72170}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{E19431B1-8D2F-475B-B7D8-8C4129965762}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E19431B1-8D2F-475B-B7D8-8C4129965762}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E19431B1-8D2F-475B-B7D8-8C4129965762}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AAECAC3B-9617-4462-8B99-15828132EA19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AAECAC3B-9617-4462-8B99-15828132EA19}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AAECAC3B-9617-4462-8B99-15828132EA19}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AAECAC3B-9617-4462-8B99-15828132EA19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F80345BD-5531-4425-851E-6E8805B72170}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F80345BD-5531-4425-851E-6E8805B72170}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F80345BD-5531-4425-851E-6E8805B72170}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F80345BD-5531-4425-851E-6E8805B72170}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -25,7 +25,7 @@ namespace StoreWebAPI.Controllers
         [HttpGet]
         public IEnumerable<Product> GetProducts()
         {
-            return _context.Products;
+            return _context.Products.Include(x => x.Category);
         }
 
         // GET: api/Products/5
@@ -37,7 +37,8 @@ namespace StoreWebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var product = await _context.Products.FindAsync(id);
+            var product = await _context.Products.Include(x => x.Category)
+                .FirstOrDefaultAsync(y => y.CategoryId == id);
 
             if (product == null)
             {
