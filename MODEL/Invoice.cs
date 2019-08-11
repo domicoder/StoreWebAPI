@@ -9,9 +9,10 @@ namespace MODEL
     public class Invoice
     {
         public int InvoiceId { get; set; }
-        [Required]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DatePurchase { get; set; } = DateTime.Now.ToUniversalTime();
         [ForeignKey("Customer")]
         public int CustomerId { get; set; }
+        public virtual ICollection<InvoiceProductDetail> Products { get; set; }
     }
 }

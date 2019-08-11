@@ -9,10 +9,13 @@ namespace MODEL
     {
         public int CustomerId { get; set; }
         [Required]
+        [StringLength(80)]
         public string Name { get; set; }
         [Required]
+        [StringLength(80)]
         public string Lastname { get; set; }
         [Required]
+        [StringLength(100)]
         public string Address { get; set; }
         [Required]
         public DateTime BornDate { get; set; }

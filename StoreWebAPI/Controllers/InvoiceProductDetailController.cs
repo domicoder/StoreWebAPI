@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MODEL;
 using PERSISTENCE;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace StoreWebAPI.Controllers
 {
@@ -25,19 +24,21 @@ namespace StoreWebAPI.Controllers
         [HttpGet]
         public IEnumerable<InvoiceProductDetail> GetInvoiceProductDetails()
         {
-            return _context.InvoiceProductDetails;
+            return _context.InvoiceProductDetails.Include(i => i.Invoice).Include(p => p.Product);
         }
 
         // GET: api/InvoiceProductDetail/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetInvoiceProductDetail([FromRoute] int id)
+        [HttpGet("api/InvoiceProductDetail/customer/{CustomerId}/invoice/{InvoiceId}/product/{ProductId}")]
+        public IActionResult GetInvoiceProductDetail([FromRoute] int CustomerId, int InvoiceId, int ProductId)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var invoiceProductDetail = await _context.InvoiceProductDetails.FindAsync(id);
+            var invoiceProductDetail = _context.Products.Where(x => x.ProductId == ProductId)
+                                                        .Include(x => x.Invoices)
+                                                        .ThenInclude(y => y.Invoice).Include(i => i.Category);
 
             if (invoiceProductDetail == null)
             {
@@ -56,7 +57,7 @@ namespace StoreWebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != invoiceProductDetail.InvoiceProductDetailId)
+            if (id != invoiceProductDetail.InvoiceId)
             {
                 return BadRequest();
             }
@@ -92,9 +93,23 @@ namespace StoreWebAPI.Controllers
             }
 
             _context.InvoiceProductDetails.Add(invoiceProductDetail);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (InvoiceProductDetailExists(invoiceProductDetail.InvoiceId))
+                {
+                    return new StatusCodeResult(StatusCodes.Status409Conflict);
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-            return CreatedAtAction("GetInvoiceProductDetail", new { id = invoiceProductDetail.InvoiceProductDetailId }, invoiceProductDetail);
+            return CreatedAtAction("GetInvoiceProductDetail", new { id = invoiceProductDetail.InvoiceId }, invoiceProductDetail);
         }
 
         // DELETE: api/InvoiceProductDetail/5
@@ -120,7 +135,7 @@ namespace StoreWebAPI.Controllers
 
         private bool InvoiceProductDetailExists(int id)
         {
-            return _context.InvoiceProductDetails.Any(e => e.InvoiceProductDetailId == id);
+            return _context.InvoiceProductDetails.Any(e => e.InvoiceId == id);
         }
     }
 }
