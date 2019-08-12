@@ -1,10 +1,11 @@
-using FluentAssertions;
+﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MODEL;
 using Moq;
 using PERSISTENCE;
 using SERVICES;
+using StoreWebAPI.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,13 +15,13 @@ using Xunit;
 
 namespace XUnitTest.Test
 {
-    public class UnitTestCustomer
-    {   
+    public class UnitTestCategory
+    {
         public static DbContextOptions<StoreContext> storeContextOptions { get; }
         private static StoreContext _context;
         public static string connectionString = "Server=(localdb)\\mssqllocaldb;Database=StoreWebApi;Trusted_Connection=True;ConnectRetryCount=0";
 
-        static UnitTestCustomer()
+        static UnitTestCategory()
         {
             storeContextOptions = new DbContextOptionsBuilder<StoreContext>()
                 .UseSqlServer(connectionString)
@@ -30,67 +31,66 @@ namespace XUnitTest.Test
 
         // -Init- Get BY ID
         [Fact]
-        public async void Customer_GetCustomerById_Return_OkResult()
+        public async void Category_GetCategoryById_Return_OkResult()
         {
             //Arrange  
-            var controller = new CustomerController(_context);
-            var customerId = 1;
+            var controller = new CategoryController(_context);
+            var categoryId = 1;
 
             //Act  
-            var data = await controller.GetCustomer(customerId);
+            var data = await controller.GetCategory(categoryId);
 
             //Assert
             Assert.IsType<OkObjectResult>(data);
         }
         [Fact]
-        public async void Customer_GetCustomerById_Return_NotFoundResult()
+        public async void Category_GetCategoryById_Return_NotFoundResult()
         {
             //Arrange  
-            var controller = new CustomerController(_context);
-            var customerId = 500;
+            var controller = new CategoryController(_context);
+            var categoryId = 500;
 
             //Act  
-            var data = await controller.GetCustomer(customerId);
+            var data = await controller.GetCategory(categoryId);
 
             //Assert
             Assert.IsType<NotFoundResult>(data);
         }
 
         [Fact]
-        public async void Customer_GetCustomerById_MatchResult()
+        public async void Category_GetCategoryById_MatchResult()
         {
             //Arrange  
-            var controller = new CustomerController(_context);
-            int? customerId = 1;
+            var controller = new CategoryController(_context);
+            int? categoryId = 1;
 
             //Act  
-            var data = await controller.GetCustomer(customerId.Value);
+            var data = await controller.GetCategory(categoryId.Value);
 
             //Assert
             Assert.IsType<OkObjectResult>(data);
 
             var okResult = data.Should().BeOfType<OkObjectResult>().Subject;
-            var customer = okResult.Value.Should().BeAssignableTo<Customer>().Subject;
+            var category = okResult.Value.Should().BeAssignableTo<Category>().Subject;
 
-            Assert.Equal("Yander", customer.Name);
-            Assert.Equal(0, customer.PhoneNumber);
+            Assert.Equal("Electronicos", category.Name);
         }
         // -End- Get BY ID
 
         // -Init- Get ALL
         [Fact]
-        public async void Customer_GetCustomers_Return_BadRequestResult()
+        public async void Category_GetCategories_Return_BadRequestResult()
         {
             //Arrange  
-            var controller = new CustomerController(_context);
+            var controller = new CategoryController(_context);
 
             //Act  
-            var customers = controller.GetCustomer();
-            customers = null;
+            var categories = controller.GetCategories();
+            categories = null;
 
-            if (customers != null)
+            if (categories != null)
                 //Assert
-                Assert.IsType<BadRequestResult>(customers);
+                Assert.IsType<BadRequestResult>(categories);
         }
         // -End- Get BY ID
 

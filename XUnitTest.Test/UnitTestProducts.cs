@@ -1,10 +1,11 @@
-using FluentAssertions;
+﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MODEL;
 using Moq;
 using PERSISTENCE;
 using SERVICES;
+using StoreWebAPI.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,13 +15,13 @@ using Xunit;
 
 namespace XUnitTest.Test
 {
-    public class UnitTestCustomer
-    {   
+    public class UnitTestProducts
+    {
         public static DbContextOptions<StoreContext> storeContextOptions { get; }
         private static StoreContext _context;
         public static string connectionString = "Server=(localdb)\\mssqllocaldb;Database=StoreWebApi;Trusted_Connection=True;ConnectRetryCount=0";
 
-        static UnitTestCustomer()
+        static UnitTestProducts()
         {
             storeContextOptions = new DbContextOptionsBuilder<StoreContext>()
                 .UseSqlServer(connectionString)
@@ -30,67 +31,68 @@ namespace XUnitTest.Test
 
         // -Init- Get BY ID
         [Fact]
-        public async void Customer_GetCustomerById_Return_OkResult()
+        public async void Product_GetProductById_Return_OkResult()
         {
             //Arrange  
-            var controller = new CustomerController(_context);
-            var customerId = 1;
+            var controller = new ProductsController(_context);
+            var productId = 1;
 
             //Act  
-            var data = await controller.GetCustomer(customerId);
+            var data = await controller.GetProduct(productId);
 
             //Assert
             Assert.IsType<OkObjectResult>(data);
         }
         [Fact]
-        public async void Customer_GetCustomerById_Return_NotFoundResult()
+        public async void Product_GetProductById_Return_NotFoundResult()
         {
             //Arrange  
-            var controller = new CustomerController(_context);
-            var customerId = 500;
+            var controller = new ProductsController(_context);
+            var productId = 500;
 
             //Act  
-            var data = await controller.GetCustomer(customerId);
+            var data = await controller.GetProduct(productId);
 
             //Assert
             Assert.IsType<NotFoundResult>(data);
         }
 
         [Fact]
-        public async void Customer_GetCustomerById_MatchResult()
+        public async void Product_GetProductById_MatchResult()
         {
             //Arrange  
-            var controller = new CustomerController(_context);
-            int? customerId = 1;
+            var controller = new ProductsController(_context);
+            int? productId = 1;
 
             //Act  
-            var data = await controller.GetCustomer(customerId.Value);
+            var data = await controller.GetProduct(productId.Value);
 
             //Assert
             Assert.IsType<OkObjectResult>(data);
 
             var okResult = data.Should().BeOfType<OkObjectResult>().Subject;
-            var customer = okResult.Value.Should().BeAssignableTo<Customer>().Subject;
+            var product = okResult.Value.Should().BeAssignableTo<Product>().Subject;
 
-            Assert.Equal("Yander", customer.Name);
-            Assert.Equal(0, customer.PhoneNumber);
+            Assert.Equal("Mouse", product.Name);
+            Assert.Equal(10, product.Price);
+            Assert.Equal(15, product.Stock);
         }
         // -End- Get BY ID
 
         // -Init- Get ALL
         [Fact]
-        public async void Customer_GetCustomers_Return_BadRequestResult()
+        public async void Product_GetProducts_Return_BadRequestResult()
         {
             //Arrange  
-            var controller = new CustomerController(_context);
+            var controller = new ProductsController(_context);
 
             //Act  
-            var customers = controller.GetCustomer();
-            customers = null;
+            var products = controller.GetProducts();
+            products = null;
 
-            if (customers != null)
+            if (products != null)
                 //Assert
-                Assert.IsType<BadRequestResult>(customers);
+                Assert.IsType<BadRequestResult>(products);
         }
         // -End- Get BY ID
 
