@@ -26,17 +26,18 @@ StoreWebAPI es un api que me permite manejar a traves de consumo de servicio web
 -  SWAGGER.
 -  Unit Testing.
 
-
 ## Azure
+
 - [Web Deploy ](https://storewebapi-jeies.azurewebsites.net/swagger/index.html)
 - [API Documentation](https://storewebapi-jeies.azurewebsites.net/swagger/index.html)
-<h1 align="center">
-<img src="https://prnt.sc/orhc53">
-</h1>
 
 ## Unit Testing
-- [Ver Pruebas Unitarias](https://prnt.sc/orhc53)
 
+- [Ver Pruebas Unitarias](https://prnt.sc/orhc53)
+<h1 align="center">
+<img src="https://image.prntscr.com/image/DF4rg5psSFyMRntv9Ea_BA.png" alt="Unit test
+</h1>
 
 ## Hecho por
+
 - [Yander Sánchez](https://github.com/zardecs)
