@@ -36,7 +36,7 @@ Tecnologías/Lenguajes utilizados.
 Azure
 *******************
 -  `Web Deploy <https://storewebapi-jeies.azurewebsites.net/swagger/index.html>`_
-
+-  `API Documentation <https://storewebapi-jeies.azurewebsites.net/swagger/index.html>`_
 
 ***************
 Colaborador
