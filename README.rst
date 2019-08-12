@@ -35,7 +35,7 @@ Tecnologías/Lenguajes utilizados.
 *******************
 Azure
 *******************
--  `Web Deploy <https://storewebapi-20190809081851.azurewebsites.net/swagger>`_
+-  `Web Deploy <https://storewebapi-jeies.azurewebsites.net/swagger/index.html>`_
 
 
 ***************
